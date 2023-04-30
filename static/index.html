@@ -1,18 +1,27 @@
 
 <head>
     <title>Vanilla Wiki</title>
+    <script>
+        fetch('api/countFiles?path=static/Articles')
+        .then(response => response.text())
+        .then(data => {
+            console.log(data);
+            //set numArticles to the number of articles in data
+            document.getElementById("numArticles").innerHTML = JSON.parse(data).fileCount;
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    </script>
 </head>
 <body>
-<iframe src="SiteHeader.html" frameborder="0"></iframe>
+<iframe src="Common/SiteHeader.html" frameborder="0"></iframe>
 <h2>Welcome to VanillaWiki!</h2>
 <p>For all your vanilla information needs or whatever!</p>
-<h2>Main Countries of origin for vanilla beans</h2>
-<ul>
-    <li>Mexico</li>
-    <li>Madagascar</li>
-    <li>Indonesia</li>
-    <li>Papua New Guinea</li>
-    <li>Uganda</li>
-</ul>
-<p>Images sourced from https://www.pexels.com/</p>
+<p>Vanilla is a flavoring derived from orchids of the genus <i>Vanilla</i>, primarily from the <i>Mexican vanilla</i>, <i>flat-leaved vanilla</i> (<i>V. planifolia</i>), derived from <i>V. planifolia</i>, is also grown commercially at the <i>Indian Ocean</i> islands of <i>Madagascar</i> and <i>Reunion</i> and in <i>Indonesia</i>. <i>Vanilla</i> is the second-most expensive spice after saffron because growing the vanilla seed pods is labor-intensive. Despite the expense, vanilla is highly valued for its flavor.</p>
+<p>As a result, vanilla is widely used in both commercial and domestic baking, perfume manufacture, and aromatherapy.</p>
+<p><b id="numArticles">N</b> articles in English</p>
+<h2>Main <a href="Articles/Countries/countries.html">Countries of origin</a> for vanilla beans</h2>
+<iframe src="Common/countryList.html" frameborder="0"></iframe>
+<p></p><iframe src="Common/SiteFooter.html" frameborder="0" scrolling="no" width="720"/>
 </body>
