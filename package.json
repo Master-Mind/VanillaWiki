@@ -1,0 +1,8 @@
+{
+    "name": "vanilla-wiki",
+    "version": "0.0.1",
+    "description": "A wiki engine built on Node.js",
+    "scripts": {
+        "start": "node ./server.mjs"
+    }
+}
