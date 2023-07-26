@@ -1,3 +1,5 @@
 Dockerfile*
 .gitignore
 README.md
+.git
+.dockerignore
