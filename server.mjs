@@ -5,7 +5,7 @@ import { countFiles } from './server/countFiles.mjs';
 
 //taken from https://developer.mozilla.org/en-US/docs/Learn/Server-side/Node_server_without_framework
 const PORT = 8000;
-const HOSTNAME = '127.0.0.1';
+const HOSTNAME = '0.0.0.0';
 
 export const MIME_TYPES = {
   default: 'application/octet-stream',
