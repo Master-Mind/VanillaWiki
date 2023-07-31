@@ -1,28 +1,31 @@
 <!DOCTYPE html>
-<script>
-    var parentUrl = parent.location.href;
-    var parentFileName = parentUrl.split("/").pop();
+<head>
+    <script>
+        var parentUrl = parent.location.href;
+        var parentFileName = parentUrl.split("/").pop();
 
-    var prettyName = parentFileName.split(".")[0];
-    //add spaces between words
-    prettyName = prettyName.replace(/([A-Z])/g, ' $1');
-    //uppercase first letter
-    prettyName = prettyName.charAt(0).toUpperCase() + prettyName.slice(1);
+        var prettyName = parentFileName.split(".")[0];
+        //add spaces between words
+        prettyName = prettyName.replace(/([A-Z])/g, ' $1');
+        //uppercase first letter
+        prettyName = prettyName.charAt(0).toUpperCase() + prettyName.slice(1);
 
 
-    var pageTitle = prettyName;
+        var pageTitle = prettyName;
 
-    if (pageTitle == "")
-    {
-        pageTitle = "Vanilla Wiki";
-    }
-    else
-    {
-        pageTitle += " - Vanilla Wiki";
-    }
+        if (pageTitle == "")
+        {
+            pageTitle = "Vanilla Wiki";
+        }
+        else
+        {
+            pageTitle += " - Vanilla Wiki";
+        }
 
-    parent.document.title = pageTitle;
-</script>
+        parent.document.title = pageTitle;
+    </script>
+    <link rel="icon" href="../images/jocelyn_morales_ga6wtj7dtso_unsplash_ZAI_icon.ico" type="image/x-icon">
+</head>
 <html>
 <body>
     <h1>Vanilla Wiki</h1>
