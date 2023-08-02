@@ -1,5 +1,6 @@
 FROM node:16-alpine
 WORKDIR /app
 COPY . .
-CMD ["node", "server.mjs"]
+ENV NODE_ENV=production
+CMD ["npm", "start"]
 EXPOSE 8000

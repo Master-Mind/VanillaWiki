@@ -5,7 +5,7 @@ import { countFiles } from './server/countFiles.mjs';
 
 //taken from https://developer.mozilla.org/en-US/docs/Learn/Server-side/Node_server_without_framework
 const PORT = 8000;
-const HOSTNAME = '0.0.0.0';
+const HOSTNAME = process.env.NODE_ENV == "production" ? "0.0.0.0" : '127.0.0.1';
 
 export const MIME_TYPES = {
   default: 'application/octet-stream',
@@ -45,15 +45,15 @@ export var apis = {
 http.createServer(async (req, res) => {
   var statusCode = 404;
 
-  if (req.url == '/favicon.ico') {
+  if (req.url == '/favicon.ico')
+  {
     console.log("favicon requested");
     const file = await prepareFile("./images/jocelyn_morales_ga6wtj7dtso_unsplash_ZAI_icon.ico");
     statusCode = file.found ? 200 : 404;
     res.writeHead(statusCode, { 'Content-Type': MIME_TYPES.ico });
     file.stream.pipe(res);
   }
-  else if (req.url.match(/\/api\//))
-  {
+  else if (req.url.match(/\/api\//)) {
     if (apis[req.url.split('?')[0]])
     {
       try
