@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import * as http from 'http';
 import * as path from 'path';
 import { countFiles } from './server/countFiles.mjs';
+import { connectToDB } from './lib/dbmanager.mjs';
 
 //taken from https://developer.mozilla.org/en-US/docs/Learn/Server-side/Node_server_without_framework
 const PORT = 8000;
@@ -82,5 +83,14 @@ http.createServer(async (req, res) => {
   }
   console.log(`${req.method} ${req.url} ${statusCode}`);
 }).listen(PORT, HOSTNAME, () => {
+  try
+  {
+    connectToDB();
+  }
+  catch (e)
+  {
+    console.log(e);
+  }
+
   console.log(`Server running at http://${HOSTNAME}:${PORT}/`);
 });
