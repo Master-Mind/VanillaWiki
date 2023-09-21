@@ -45,6 +45,16 @@ export var apis = {
   "/api/countFiles": countFiles,
 };
 
+async function sendFile(req, res, filePath = null) {
+  const file = await prepareFile(filePath ? filePath : req.url);
+  const statusCode = file.found ? 200 : 404;
+  const mimeType = MIME_TYPES[file.ext] || MIME_TYPES.default;
+  res.writeHead(statusCode, { 'Content-Type': mimeType });
+  file.stream.pipe(res);
+
+  return statusCode;
+}
+
 http.createServer(async (req, res) => {
   var statusCode = 404;
 
@@ -52,10 +62,7 @@ http.createServer(async (req, res) => {
   if (req.url == '/favicon.ico')
   {
     console.log("favicon requested");
-    const file = await prepareFile("./images/jocelyn_morales_ga6wtj7dtso_unsplash_ZAI_icon.ico");
-    statusCode = file.found ? 200 : 404;
-    res.writeHead(statusCode, { 'Content-Type': MIME_TYPES.ico });
-    file.stream.pipe(res);
+    statusCode = await sendFile(req, res, "./images/jocelyn_morales_ga6wtj7dtso_unsplash_ZAI_icon.ico");
   }
   //server scripts
   else if (req.url.match(/\/api\//))
@@ -79,13 +86,9 @@ http.createServer(async (req, res) => {
     }
   }
   //client files
-  else if (req.url.match(/\/static\//) || req.url.match(/\/lib\//))
+  else
   {
-      const file = await prepareFile(req.url);
-      statusCode = file.found ? 200 : 404;
-      const mimeType = MIME_TYPES[file.ext] || MIME_TYPES.default;
-      res.writeHead(statusCode, { 'Content-Type': mimeType });
-      file.stream.pipe(res);
+    statusCode = await sendFile(req, res);
   }
   console.log(`${req.method} ${req.url} ${statusCode}`);
 }).listen(PORT, HOSTNAME, () => {
