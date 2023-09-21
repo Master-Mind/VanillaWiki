@@ -1,8 +1,10 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
 import * as fs from 'fs';
 import * as http from 'http';
 import * as path from 'path';
 import { countFiles } from './server/countFiles.mjs';
-import { connectToDB } from './lib/dbmanager.mjs';
+import { connectToDB } from './server/dbmanager.mjs';
 
 //taken from https://developer.mozilla.org/en-US/docs/Learn/Server-side/Node_server_without_framework
 const PORT = 8000;
@@ -46,6 +48,7 @@ export var apis = {
 http.createServer(async (req, res) => {
   var statusCode = 404;
 
+  //favicon
   if (req.url == '/favicon.ico')
   {
     console.log("favicon requested");
@@ -54,7 +57,9 @@ http.createServer(async (req, res) => {
     res.writeHead(statusCode, { 'Content-Type': MIME_TYPES.ico });
     file.stream.pipe(res);
   }
-  else if (req.url.match(/\/api\//)) {
+  //server scripts
+  else if (req.url.match(/\/api\//))
+   {
     if (apis[req.url.split('?')[0]])
     {
       try
@@ -73,7 +78,8 @@ http.createServer(async (req, res) => {
       res.writeHead(statusCode, { 'Content-Type': MIME_TYPES.json });
     }
   }
-  else
+  //client files
+  else if (req.url.match(/\/static\//) || req.url.match(/\/lib\//))
   {
       const file = await prepareFile(req.url);
       statusCode = file.found ? 200 : 404;
